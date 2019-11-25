@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="js.css">
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+        }
+
+        .box {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 800px;
+        }
+        tr{
+            text-align: center;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <p>
+            姓名:
+            <input type="text" id="na">
+        </p>
+        <p>
+            性别:
+            <input type="radio" name="sex" value="男">男
+            <input type="radio" name="sex" value="女">女
+        </p>
+        <p>
+            年龄:
+            <input type="text" id="age">
+        </p>
+        <p><button onclick="app()">添加</button></p>
+
+        <table border="1" cellspacing="0" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>全部<input type="checkbox" id="checkAll"></th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td><input type="checkbox" class="check"></td>
+                    <td>张三</td>
+                    <td>男</td>
+                    <td>20</td>
+                    <td><button onclick="del(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <button onclick="xdel()">选中删除</button>
+            <button onclick="delall()">全部删除</button>
+        </p>
+    </div>
+</body>
+
+</html>
+<script>
+    // 添加
+    function app() {
+        var tr = document.createElement('tr')
+        var sexlist = document.getElementsByName('sex');
+        for (var i = 0; i < sexlist.length; i++) {
+            if (sexlist[i].checked == true) {
+                var sex = sexlist[i].value;
+                break;
+            }
+        }
+        tr.innerHTML = `
+        <td><input type="checkbox" class="check"></td>
+        <td>${na.value}</td>
+        <td>${sex}</td>
+        <td>${age.value}</td>
+        <td><button onclick="del(this)">删除</button></td>
+    `
+        tbody.insertBefore(tr, tbody.lastElementChild)
+    }
+    // 删除
+    function del(obj) {
+        tbody.removeChild(obj.parentNode.parentNode)
+    }
+    // 全部删除
+    function delall() {
+        tbody.innerHTML = ""
+    }
+    //全选
+    checkAll.onclick = function () {
+        //获取一下所有单选按钮
+        var dx = document.querySelectorAll(".check");
+        for (var i = 0; i < dx.length; i++) {
+            dx[i].checked = checkAll.checked
+        }
+    }
+    // 选中删除
+    function xdel() {
+        var dx = document.querySelectorAll(".check");
+        for (var i = 0; i < dx.length; i++) {
+            if (dx[i].checked) {
+                tbody.removeChild(dx[i].parentNode.parentNode)
+            }
+        }
+    }
+</script>
